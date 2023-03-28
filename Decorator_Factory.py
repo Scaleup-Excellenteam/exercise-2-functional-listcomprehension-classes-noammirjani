@@ -1,8 +1,11 @@
 class InvalidArgumentTypeError(TypeError):
+    """Exception for invalid argument type"""
     pass
 
 
 class Factory(object):
+    """Factory for decorators
+    :param types_checkers: dict of types and decorators"""
     def __init__(self):
         self.types_checkers = {}
 
@@ -18,15 +21,14 @@ class Factory(object):
 
 
 def type_checker_decorator(expected_type):
+    """Decorator for checking argument type"""
     def decorator(function):
         def wrapper(arg):
             if isinstance(arg, expected_type):
                 return function(arg)
             else:
                 raise InvalidArgumentTypeError(f"Expected {expected_type}, got {type(arg)}")
-
         return wrapper
-
     return decorator
 
 
